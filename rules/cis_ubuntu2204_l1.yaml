@@ -1,0 +1,93 @@
+# CIS Ubuntu Linux 22.04 LTS Benchmark — Level 1 (Server), starter subset.
+# NOTE: verify each cis_ref against the exact benchmark PDF version you're
+# using — CIS renumbers sections between releases.
+
+- id: SSH-001
+  title: Ensure SSH root login is disabled
+  cis_ref: "5.2.7"
+  severity: high
+  source: sshd_effective
+  key: permitrootlogin
+  operator: equals
+  expected: "no"
+  remediation: "Set 'PermitRootLogin no' in /etc/ssh/sshd_config and restart sshd."
+
+- id: SSH-002
+  title: Ensure SSH MaxAuthTries is 4 or less
+  cis_ref: "5.2.18"
+  severity: medium
+  source: sshd_effective
+  key: maxauthtries
+  operator: max
+  expected: 4
+  remediation: "Set 'MaxAuthTries 4' in /etc/ssh/sshd_config and restart sshd."
+
+- id: SSH-003
+  title: Ensure SSH PermitEmptyPasswords is disabled
+  cis_ref: "5.2.9"
+  severity: high
+  source: sshd_effective
+  key: permitemptypasswords
+  operator: equals
+  expected: "no"
+  remediation: "Set 'PermitEmptyPasswords no' in /etc/ssh/sshd_config and restart sshd."
+
+- id: SSH-004
+  title: Ensure SSH LogLevel is appropriate
+  cis_ref: "5.2.5"
+  severity: low
+  source: sshd_effective
+  key: loglevel
+  operator: in
+  expected: ["INFO", "VERBOSE"]
+  remediation: "Set 'LogLevel VERBOSE' (or INFO) in /etc/ssh/sshd_config."
+
+- id: NET-001
+  title: Ensure IP forwarding is disabled
+  cis_ref: "3.2.1"
+  severity: medium
+  source: sysctl
+  key: net.ipv4.ip_forward
+  operator: equals
+  expected: 0
+  remediation: "Set 'net.ipv4.ip_forward = 0' in /etc/sysctl.d/ and run sysctl --system."
+
+- id: NET-002
+  title: Ensure TCP SYN cookies are enabled
+  cis_ref: "3.3.8"
+  severity: medium
+  source: sysctl
+  key: net.ipv4.tcp_syncookies
+  operator: equals
+  expected: 1
+  remediation: "Set 'net.ipv4.tcp_syncookies = 1' in /etc/sysctl.d/ and run sysctl --system."
+
+- id: KRN-001
+  title: Ensure ASLR is fully enabled
+  cis_ref: "1.5.1"
+  severity: high
+  source: sysctl
+  key: kernel.randomize_va_space
+  operator: equals
+  expected: 2
+  remediation: "Set 'kernel.randomize_va_space = 2' in /etc/sysctl.d/ and run sysctl --system."
+
+- id: FILE-001
+  title: Ensure permissions on /etc/passwd are 644 or stricter
+  cis_ref: "6.1.2"
+  severity: high
+  source: file_perms
+  key: ["/etc/passwd", "mode"]
+  operator: max
+  expected: 644
+  remediation: "chmod 644 /etc/passwd"
+
+- id: FILE-002
+  title: Ensure /etc/shadow is owned by root
+  cis_ref: "6.1.4"
+  severity: high
+  source: file_perms
+  key: ["/etc/shadow", "owner"]
+  operator: equals
+  expected: root
+  remediation: "chown root /etc/shadow"
