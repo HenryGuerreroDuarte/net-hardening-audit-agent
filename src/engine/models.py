@@ -1,16 +1,16 @@
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel
 
 
-class Status(str, Enum):
+class Status(StrEnum):
     PASS = "pass"
     FAIL = "fail"
     ERROR = "error"  # could not assess — missing data, bad rule, failed command
 
 
-class Severity(str, Enum):
+class Severity(StrEnum):
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"

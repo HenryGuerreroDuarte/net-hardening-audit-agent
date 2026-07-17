@@ -1,0 +1,5 @@
+/etc/passwd 644 root root
+/etc/shadow 640 root shadow
+/etc/group 644 root root
+/etc/gshadow 640 root shadow
+/etc/ssh/sshd_config 644 root root

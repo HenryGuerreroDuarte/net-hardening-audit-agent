@@ -6,7 +6,6 @@ COMMANDS: dict[str, str] = {
     "sysctl": "sysctl -a 2>/dev/null",
     "enabled_services": "systemctl list-unit-files --type=service --state=enabled --no-legend",
     "file_perms": (
-        "stat -c '%n %a %U %G' "
-        "/etc/passwd /etc/shadow /etc/group /etc/gshadow /etc/ssh/sshd_config"
+        "stat -c '%n %a %U %G' /etc/passwd /etc/shadow /etc/group /etc/gshadow /etc/ssh/sshd_config"
     ),
 }
